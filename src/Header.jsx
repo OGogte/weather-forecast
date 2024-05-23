@@ -21,9 +21,9 @@ const Header = ({ onSearch }) => {
 
     return (
         <header className="bg-special-black">
-            <div className="container mx-auto p-4 flex flex-col sm:flex-row items-center justify-between">
+            <div className="container mx-auto p-4 flex flex-col sm:flex-row items-center">
                 <img className="h-12 mb-4 sm:mb-0" src={logo} alt="Logo" />
-                <form onSubmit={handleSubmit} className="relative flex items-center w-full sm:w-auto mb-4 sm:mb-0">
+                <form onSubmit={handleSubmit} className="relative lg:ml-96 md:ml-36 flex items-center w-full sm:w-auto mb-4 sm:mb-0">
                     <input
                         type="text"
                         placeholder="Search City..."
@@ -35,10 +35,7 @@ const Header = ({ onSearch }) => {
                         <img src={search} className="h-5 w-5 text-gray-400" alt="Search Icon" />
                     </button>
                 </form>
-                <button onClick={handleSearch} className="w-full sm:w-auto bg-special-purple text-black py-2 px-4 rounded-full flex items-center justify-center cursor-pointer">
-                    <img src={location} className="w-4 h-4 mr-2" alt="Location Icon" />
-                    Current Location
-                </button>
+
             </div>
         </header>
     );

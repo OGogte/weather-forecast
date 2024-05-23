@@ -17,7 +17,7 @@ import icon_13d from './assets/weather_icons/icon_13d.png';
 import icon_13n from './assets/weather_icons/icon_13n.png';
 import icon_50d from './assets/weather_icons/icon_50d.png';
 import icon_50n from './assets/weather_icons/icon_50n.png';
-
+import { Rings } from 'react-loader-spinner';
 const ForecastCard = ({ city }) => {
     const [forecastData, setForecastData] = useState(null);
     const iconMap = {
@@ -66,7 +66,11 @@ const ForecastCard = ({ city }) => {
     }, [city]);
 
     if (!forecastData) {
-        return <div>Loading...</div>; 
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Rings color="#ffffff" height={80} width={80} />
+            </div>
+        );
     }
 
     return (

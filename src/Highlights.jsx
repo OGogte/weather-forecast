@@ -9,7 +9,7 @@ import waves from './assets/waves.svg';
 import thermostat from './assets/thermostat.svg';
 import visibility from './assets/visibility.svg';
 import { getTime } from './dateUtils';
-
+import { Rings } from 'react-loader-spinner';
 const Highlights = ({ city }) => {
     const [weatherData, setWeatherData] = useState(null);
 
@@ -70,79 +70,84 @@ const Highlights = ({ city }) => {
     }, [city]);
 
     if (!weatherData || !airQualityData) {
-        return <div>Loading...</div>; 
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Rings color="#ffffff" height={80} width={80} />
+            </div>
+        );
     }
 
-    const timezoneOffset = weatherData.timezone;
-    const sunriseTime = getTime(weatherData.sys.sunrise, timezoneOffset);
-    const sunsetTime = getTime(weatherData.sys.sunset, timezoneOffset);
 
-    return (
-        <div className="bg-special-gray text-white rounded-3xl p-6 shadow-lg mt-4">
-            <div className="text-lg mb-4">Today's Highlights</div>
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                {/* Air Quality Component */}
-                <div className="bg-highlights-black text-text-gray p-4 rounded-3xl w-full lg:w-auto">
-                    <div>Air Quality Index</div>
-                    <div className="flex flex-wrap justify-between p-2">
-                        <div className="flex flex-col mr-2"><img src={air} alt="" /></div>
-                        <div className="flex flex-col mr-2 text-sm text-center lg:text-left">PM2.5 <span className="text-white text-2xl">{airQualityData && airQualityData.list[0].components.pm2_5}</span></div>
-                        <div className="flex flex-col mr-2 text-sm text-center lg:text-left">SO2 <span className="text-white text-2xl">{airQualityData && airQualityData.list[0].components.so2}</span></div>
-                        <div className="flex flex-col mr-2 text-sm text-center lg:text-left">NO2 <span className="text-white text-2xl">{airQualityData && airQualityData.list[0].components.no2}</span></div>
-                        <div className="flex flex-col mr-2 text-sm text-center lg:text-left">O3 <span className="text-white text-2xl">{airQualityData && airQualityData.list[0].components.o3}</span></div>
-                    </div>
-                </div>
+const timezoneOffset = weatherData.timezone;
+const sunriseTime = getTime(weatherData.sys.sunrise, timezoneOffset);
+const sunsetTime = getTime(weatherData.sys.sunset, timezoneOffset);
 
-                {/* Sunrise & Sunset Component */}
-                <div className="bg-highlights-black p-4 rounded-3xl">
-                    <div>Sunrise & Sunset</div>
-                    <div className="flex flex-wrap justify-between p-2">
-                        <div className='flex'><img src={sun} className='mr-3 ' alt="" /><div className="flex flex-col mr-2">Sunrise: <span className="text-white">{weatherData && sunriseTime}</span></div></div>
-                        <div className='flex mr-20'><img src={moon} className='mr-3 ' alt="" /><div className="flex flex-col mr-2">Sunset: <span className="text-white">{weatherData && sunsetTime}</span></div></div>
-                    </div>
+return (
+    <div className="bg-special-gray text-white rounded-3xl p-6 shadow-lg mt-4">
+        <div className="text-lg mb-4">Today's Highlights</div>
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            {/* Air Quality Component */}
+            <div className="bg-highlights-black text-text-gray p-4 rounded-3xl w-full lg:w-auto">
+                <div>Air Quality Index</div>
+                <div className="flex flex-wrap justify-between p-2">
+                    <div className="flex flex-col mr-2"><img src={air} alt="" /></div>
+                    <div className="flex flex-col mr-2 text-sm text-center lg:text-left">PM2.5 <span className="text-white text-2xl">{airQualityData && airQualityData.list[0].components.pm2_5}</span></div>
+                    <div className="flex flex-col mr-2 text-sm text-center lg:text-left">SO2 <span className="text-white text-2xl">{airQualityData && airQualityData.list[0].components.so2}</span></div>
+                    <div className="flex flex-col mr-2 text-sm text-center lg:text-left">NO2 <span className="text-white text-2xl">{airQualityData && airQualityData.list[0].components.no2}</span></div>
+                    <div className="flex flex-col mr-2 text-sm text-center lg:text-left">O3 <span className="text-white text-2xl">{airQualityData && airQualityData.list[0].components.o3}</span></div>
                 </div>
             </div>
 
-            {/* Additional Weather Highlights */}
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 mt-4">
-                {/* Humidity Component */}
-                <div className="bg-highlights-black p-4 rounded">
-                    <div className='text-sm text-text-gray'>Humidity</div>
-                    <div className='flex justify-between mt-5'>
-                        <img src={humidity} className='mr-3 ' alt="" />
-                        <div className='text-white text-right text-3xl'>{weatherData && weatherData.main.humidity}%</div>
-                    </div>
-                </div>
-
-                {/* Pressure Component */}
-                <div className="bg-highlights-black p-4 rounded">
-                    <div className='text-sm text-text-gray'>Pressure</div>
-                    <div className='flex justify-between mt-5'>
-                        <img src={waves} className='mr-3 ' alt="" />
-                        <div className='text-white text-right text-3xl'>{weatherData && weatherData.main.pressure} hPa</div>
-                    </div>
-                </div>
-
-                {/* Visibility Component */}
-                <div className="bg-highlights-black p-4 rounded">
-                    <div className='text-sm text-text-gray'>Visibility</div>
-                    <div className='flex justify-between mt-5'>
-                        <img src={visibility} className='mr-3 ' alt="" />
-                        <div className='text-white text-right text-3xl'>{weatherData && weatherData.visibility / 1000} KM</div>
-                    </div>
-                </div>
-
-                {/* Feels Like Component */}
-                <div className="bg-highlights-black p-4 rounded">
-                    <div className='text-sm text-text-gray'>Feels Like</div>
-                    <div className='flex justify-between mt-5'>
-                        <img src={thermostat} className='mr-3 ' alt="" />
-                        <div className='text-white text-right text-3xl'>{weatherData && weatherData.main.feels_like} °C</div>
-                    </div>
+            {/* Sunrise & Sunset Component */}
+            <div className="bg-highlights-black p-4 rounded-3xl">
+                <div>Sunrise & Sunset</div>
+                <div className="flex flex-wrap justify-between p-2">
+                    <div className='flex'><img src={sun} className='mr-3 ' alt="" /><div className="flex flex-col mr-2">Sunrise: <span className="text-white">{weatherData && sunriseTime}</span></div></div>
+                    <div className='flex mr-20'><img src={moon} className='mr-3 ' alt="" /><div className="flex flex-col mr-2">Sunset: <span className="text-white">{weatherData && sunsetTime}</span></div></div>
                 </div>
             </div>
         </div>
-    );
+
+        {/* Additional Weather Highlights */}
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 mt-4">
+            {/* Humidity Component */}
+            <div className="bg-highlights-black p-4 rounded">
+                <div className='text-sm text-text-gray'>Humidity</div>
+                <div className='flex justify-between mt-5'>
+                    <img src={humidity} className='mr-3 ' alt="" />
+                    <div className='text-white text-right text-3xl'>{weatherData && weatherData.main.humidity}%</div>
+                </div>
+            </div>
+
+            {/* Pressure Component */}
+            <div className="bg-highlights-black p-4 rounded">
+                <div className='text-sm text-text-gray'>Pressure</div>
+                <div className='flex justify-between mt-5'>
+                    <img src={waves} className='mr-3 ' alt="" />
+                    <div className='text-white text-right text-3xl'>{weatherData && weatherData.main.pressure} hPa</div>
+                </div>
+            </div>
+
+            {/* Visibility Component */}
+            <div className="bg-highlights-black p-4 rounded">
+                <div className='text-sm text-text-gray'>Visibility</div>
+                <div className='flex justify-between mt-5'>
+                    <img src={visibility} className='mr-3 ' alt="" />
+                    <div className='text-white text-right text-3xl'>{weatherData && weatherData.visibility / 1000} KM</div>
+                </div>
+            </div>
+
+            {/* Feels Like Component */}
+            <div className="bg-highlights-black p-4 rounded">
+                <div className='text-sm text-text-gray'>Feels Like</div>
+                <div className='flex justify-between mt-5'>
+                    <img src={thermostat} className='mr-3 ' alt="" />
+                    <div className='text-white text-right text-3xl'>{weatherData && weatherData.main.feels_like} °C</div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
 };
 
 export default Highlights;

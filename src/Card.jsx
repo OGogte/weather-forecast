@@ -20,6 +20,7 @@ import icon_13n from './assets/weather_icons/icon_13n.png';
 import icon_50d from './assets/weather_icons/icon_50d.png';
 import icon_50n from './assets/weather_icons/icon_50n.png';
 import { getDate} from './dateUtils'; 
+import { Rings } from 'react-loader-spinner';
 
 const Card = ({ city }) => {
     const [weatherData, setWeatherData] = useState(null);
@@ -62,7 +63,11 @@ const Card = ({ city }) => {
     };
 
     if (!weatherData) {
-        return <div>Loading...</div>;
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Rings color="#ffffff" height={80} width={80} />
+            </div>
+        );
     }
     
     const description = weatherData.weather[0].description;

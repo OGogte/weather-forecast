@@ -1,13 +1,23 @@
-import Header from "./Header"
-import './index.css'
+import { useState } from 'react';
+import Header from './Header';
+import './index.css';
 import Dashboard from './Dashboard';
+import { ToastContainer } from 'react-toastify';
+
 function App() {
-  return (
-    <div className="bg-special-black min-h-screen">
-      <Header />
-      <Dashboard />
-    </div>
-  )
+    const [city, setCity] = useState('Pune'); 
+
+    const handleSearch = (searchText) => {
+        setCity(searchText);
+    };
+
+    return (
+        <div className="bg-special-black min-h-screen">
+        <ToastContainer />
+            <Header onSearch={handleSearch} />
+            <Dashboard city={city} onClick={handleSearch}/>
+        </div>
+    );
 }
 
-export default App
+export default App;

@@ -1,13 +1,73 @@
-import cloudIcon from './assets/weather_icons/04d.png';
+import { useState, useEffect } from 'react';
+import icon_01d from './assets/weather_icons/icon_01d.png';
+import icon_01n from './assets/weather_icons/icon_01n.png';
+import icon_02d from './assets/weather_icons/icon_02d.png';
+import icon_02n from './assets/weather_icons/icon_02n.png';
+import icon_03d from './assets/weather_icons/icon_03d.png';
+import icon_03n from './assets/weather_icons/icon_03n.png';
+import icon_04d from './assets/weather_icons/icon_04d.png';
+import icon_04n from './assets/weather_icons/icon_04n.png';
+import icon_09d from './assets/weather_icons/icon_09d.png';
+import icon_09n from './assets/weather_icons/icon_09n.png';
+import icon_10d from './assets/weather_icons/icon_10d.png';
+import icon_10n from './assets/weather_icons/icon_10n.png';
+import icon_11d from './assets/weather_icons/icon_11d.png';
+import icon_11n from './assets/weather_icons/icon_11n.png';
+import icon_13d from './assets/weather_icons/icon_13d.png';
+import icon_13n from './assets/weather_icons/icon_13n.png';
+import icon_50d from './assets/weather_icons/icon_50d.png';
+import icon_50n from './assets/weather_icons/icon_50n.png';
 
-const ForecastCard = () => {
-    const forecastData = [
-        { day: 'Sat', date: '24 May', temp: '43°', icon: cloudIcon },
-        { day: 'Sun', date: '25 May', temp: '46°', icon: cloudIcon },
-        { day: 'Mon', date: '26 May', temp: '45°', icon: cloudIcon },
-        { day: 'Tue', date: '27 May', temp: '42°', icon: cloudIcon },
-        { day: 'Wed', date: '28 May', temp: '43°', icon: cloudIcon },
-    ];
+const ForecastCard = ({ city }) => {
+    const [forecastData, setForecastData] = useState(null);
+    const iconMap = {
+        '01d': icon_01d,
+        '01n': icon_01n,
+        '02d': icon_02d,
+        '02n': icon_02n,
+        '03d': icon_03d,
+        '03n': icon_03n,
+        '04d': icon_04d,
+        '04n': icon_04n,
+        '09d': icon_09d,
+        '09n': icon_09n,
+        '10d': icon_10d,
+        '10n': icon_10n,
+        '11d': icon_11d,
+        '11n': icon_11n,
+        '13d': icon_13d,
+        '13n': icon_13n,
+        '50d': icon_50d,
+        '50n': icon_50n,
+    };
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_FORECAST_API}${city}&appid=${import.meta.env.VITE_API_KEY}&units=metric`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch weather data');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const processedData = data.list.filter(item => item.dt_txt.includes('18:00:00')).map(item => ({
+                    day: new Date(item.dt * 1000).toLocaleDateString('en-US', { weekday: 'short' }),
+                    date: new Date(item.dt * 1000).toLocaleDateString('en-US', { day: 'numeric', month: 'short' }),
+                    temp: `${Math.round(item.main.temp)}°C`,
+                    icon: iconMap[item.weather[0].icon] 
+                }));
+                setForecastData(processedData);
+                console.log('Weather data:', data);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error fetching weather data:', error);
+            });
+    }, [city]);
+
+    if (!forecastData) {
+        return <div>Loading...</div>; 
+    }
 
     return (
         <div>

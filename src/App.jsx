@@ -1,8 +1,12 @@
 import Header from "./Header"
 import './index.css'
+import Dashboard from './Dashboard';
 function App() {
   return (
-    <Header />
+    <div className="bg-special-black min-h-screen">
+      <Header />
+      <Dashboard />
+    </div>
   )
 }
 

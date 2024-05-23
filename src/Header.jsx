@@ -11,13 +11,13 @@ const Header = () => {
                     <input
                         type="text"
                         placeholder="Search City..."
-                        className="w-full sm:w-auto px-10 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-1 focus:ring-gray-500"
+                        className="w-full sm:w-auto px-10 py-2 rounded-lg bg-special-gray text-white focus:outline-none focus:ring-1 focus:ring-gray-500"
                     />
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <img src={search} className="h-5 w-5 text-gray-400" alt="Search Icon" />
                     </div>
                 </div>
-                <button className="w-full sm:w-auto bg-special-purple text-white font-bold py-2 px-4 rounded-full flex items-center justify-center cursor-pointer">
+                <button className="w-full sm:w-auto bg-special-purple text-black py-2 px-4 rounded-full flex items-center justify-center cursor-pointer">
                     <img src={location} className="w-4 h-4 mr-2" alt="Location Icon" />
                     Current Location
                 </button>

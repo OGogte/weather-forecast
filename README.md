@@ -8,7 +8,7 @@ Steps to run locally
    git clone https://github.com/OGogte/weather-forecast-app.git
    ```
 2. ```bash
-   cd "./todo-app-frontend"
+   cd "./weather-forecast-app"
    ```
 3. ```bash
    npm i
